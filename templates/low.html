@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.min.css" />
+
+    
+</head>
+
+<body>
+{% block body %}
+    <div> 
+        <ul class="nav nav-tabs">
+        <li role="presentation" class="active" > <a href="index.html">Home</a> </li>
+        <li role="presentation"><a href="leddemo.html">Led demo</a></li>
+        <li role="presentation"><a href="leddemo.html">Sensor demo</a></li>
+    </div>
+
+
+    <script src="../static/scripts/jquery.js"> </script>
+    <script src="../static/scripts/bootstrap.min.js"> </script>
+    
+{% endblock %}
+</body>
+
+</html>

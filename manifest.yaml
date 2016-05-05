@@ -1,0 +1,4 @@
+---
+applications:
+- name: fetchdata
+  memory: 128M
