@@ -5,18 +5,31 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import render_template
 from tobluemix import app
-import paho.mqtt.client as mqtt
 import mypaho
 
+led_state = None
 
+def setLedState(inp):
+    global led_state
+    On = ("on", "On", "ON", 1, "1")
+    Off = ("off","Off","OFF", 0, "0")
+    if (inp in Off):
+        led_state = "Off"
+                        
+    elif (inp  in On):
+        led_state = "On"
 
 @app.route('/')
 @app.route('/home')
 def home():
+    global led_state
     """Renders the home page."""
+    mypaho.client.subscribe(mypaho.send_topic)
+    mypaho.client.publish(mypaho.request_topic)
+    setLedState(mypaho.retCurrentMsg())
     return render_template(
         'index.html',
-        led_state = None
+        led_state = led_state
     )
 
 #@app.route('/contact')
@@ -39,21 +52,18 @@ def home():
 #        message='Your application description page.'
 #    )
 
-@app.route('/getstate', methods=['GET','POST'])
-def getstate():
-    client = mqtt.Client()
-    client.on_connect = mypaho.on_connect
-    client.on_message = mypaho.on_message
-    client.connect("test.mosquitto.org", 1883, 60)
-    client.loop_start()
-
-    mypaho.set_topic(mypaho.send_topic)
-    client.subscribe(mypaho.current_topic)
-
-    mypaho.set_topic(mypaho.request_topic)
-    client.publish(mypaho.current_topic)
-    
-    return render_template('index.html',led_state = str(mypaho.current_msg))
+@app.route('/setstate', methods=['GET','POST'])
+def setstate():
+    global led_state
+    if led_state == "Off":
+        mypaho.client.publish(mypaho.cmd_topic,"On")
+        setLedState("1")
+    elif led_state == "On":
+        mypaho.client.publish(mypaho.cmd_topic,"Off")
+        setLedState("0")
+    return render_template(
+    'index.html',
+    led_state = led_state)
 
 
 
