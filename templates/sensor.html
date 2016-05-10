@@ -1,1 +1,28 @@
 {% extends "low.html" %}
+
+
+
+
+{% block head %}
+    {% block title %} Sensor Demo {% endblock %}
+    {{super()}}
+
+{% endblock %}
+
+{% block body %}
+
+    {{super()}}
+
+
+    <div>
+        <button class="btn btn-primary" id="data">Get data</button>
+    </div>
+         
+    <div id="placeholder" style="width:600px;height:300px"></div>
+
+    <script type="text/javascript" src ="../static/scripts/jquery.flot.min.js"> </script>
+    <script type="text/javascript" src ="../static/scripts/jquery.flot.time.min.js"> </script>
+    <script type="text/javascript" src ="../static/scripts/script.js"> </script>
+
+    
+{% endblock %}

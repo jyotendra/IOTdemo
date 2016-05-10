@@ -1,4 +1,4 @@
-""" This module will contain topics and callback handlers """
+﻿""" This module will contain topics and callback handlers """
 import paho.mqtt.client as mqtt
 
 request_topic = "js/object/request/status"
@@ -11,6 +11,11 @@ send_topic = "js/object/send/status"
 
 cmd_topic  = "js/object/command"
 # This topic is used to give On or Off command.
+
+sense_topic = "js/object/sense/light"
+# At this topic snesor data request will be made
+
+sensor_data_topic = "js/object/sense/light/data"
 
 current_topic = None # This topic will hold the current topic according to the context
 current_msg = "Off" # This global will take in the current message
@@ -35,6 +40,9 @@ def on_message(client, userdata, msg):
     if (msg.topic == send_topic):
         current_msg = str(msg.payload)
         print "LED returned this status: "+str(current_msg)
+
+    if (msg.topic == sensor_data_topic):
+        current_msg = str(msg.payload)
 
 
 client = mqtt.Client()

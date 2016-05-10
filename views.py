@@ -1,4 +1,4 @@
-"""
+﻿"""
 Routes and views for the flask application.
 """
 
@@ -20,7 +20,7 @@ def setLedState(inp):
         led_state = "On"
 
 @app.route('/')
-@app.route('/home')
+@app.route('/index.html')
 def home():
     global led_state
     """Renders the home page."""
@@ -32,25 +32,20 @@ def home():
         led_state = led_state
     )
 
-#@app.route('/contact')
-#def contact():
-#    """Renders the contact page."""
-#    return render_template(
-#        'contact.html',
-#        title='Contact',
-#        year=datetime.now().year,
-#        message='Your contact page.'
-#    )
+@app.route('/sensor.html')
+def sensor():
+    mypaho.client.subscribe(mypaho.sensor_data_topic)
+    """Renders the sensor page."""
+    return render_template(
+        'sensor.html'
+    )
 
-#@app.route('/about')
-#def about():
-#    """Renders the about page."""
-#    return render_template(
-#        'about.html',
-#        title='About',
-#        year=datetime.now().year,
-#        message='Your application description page.'
-#    )
+@app.route('/sensordata')
+def sensordata():
+    """Get sensor data"""
+    mypaho.client.publish(mypaho.sense_topic)
+    return mypaho.current_msg
+    
 
 @app.route('/setstate', methods=['GET','POST'])
 def setstate():

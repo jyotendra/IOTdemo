@@ -1,4 +1,4 @@
-"""
+﻿"""
 This script runs the FlaskWebProject1 application using a development server.
 """
 
@@ -8,4 +8,5 @@ from tobluemix import app
 port = os.getenv('PORT', '5000')
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=int(port))
+    app.debug = True
+    app.run(host='0.0.0.0', port=int(port))
